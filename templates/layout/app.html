@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content=""> {% block title %}{% endblock %}
+    <title>Example Template</title>
+    <!-- Bootstrap core CSS-->
+    {% load static %}
+    <link rel="stylesheet" type="text/css" href="{% static 'bootstrap/css/bootstrap.min.css' %}" />
+    <!-- Custom fonts for this template-->
+    <link rel="stylesheet" type="text/css" href="{% static 'font-awesome/css/font-awesome.min.css' %}" />
+    <!-- Page level plugin CSS-->
+    <link href="{% static 'vendor/datatables/dataTables.bootstrap4.css' %}" />
+    <!-- Custom styles for this template-->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/sb-admin.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/custom.css' %}" /> {% block stylesheet %}{% endblock %}
+
+
+</head>
+
+<body class="" id="page-top">
+    <div class="content-wrapper">
+        <!-- container-fluid-->
+        {% block body %}{% endblock %}
+
+        <!--Dynamic Javascript-->
+        <script type="text/javascript" src="{% static 'jquery/jquery.min.js' %}"></script>
+        <script type="text/javascript" src="{% static 'bootstrap/js/bootstrap.bundle.min.js' %}"></script>
+        <!-- Core plugin JavaScript-->
+        <script type="text/javascript" src="{% static 'jquery-easing/jquery.easing.min.js' %}"></script>
+
+        <!-- Custom scripts for all pages-->
+        <script type="text/javascript" src="{% static 'js/sb-admin.min.js' %}"></script>
+
+        {% block javascript %}{% endblock %}
+    </div>
+</body>
+
+</html>

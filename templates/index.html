@@ -1,0 +1,24 @@
+{% extends 'layout/app.html' %} {% load static %} {% block body %}
+<div class="card card-home mx-auto mt-5">
+    <!-- Icon Cards-->
+    <div class="card-header text-center">
+        <div class="m-4">
+            <h1 class="col-md-12 text-center text-info">Expediente Médico</h1>
+            <h1 class="col-md-12 text-center text-info">Evaluación Médica de Admisión</h1>
+        </div>
+    </div>
+    <div class="card-body">
+        <div class="m-4">
+            <label class="form-control"><h4 class="text-info">Operaciones con la Base de Datos de Pacientes</h4></label>
+        </div>
+        <div class="row p-3">
+            <div class="col-md-4"><a href="{% url 'search' %}" class="col-md-12 btn btn-success">Buscar paciente</a></div>
+            <div class="col-md-4"><a href="{% url 'create' %}" class="col-md-12 btn btn-primary">Agregar Expediente</a></div>
+            <div class="col-md-4"><a href="" class="col-md-12 btn btn-warning">Estadísticas</a></div>
+        </div>
+        <div class="row pull-right pr-3 mt-5">
+            <div class="col-md-4"><a href="/logout" class="btn btn-danger">Exit</a></div>
+        </div>
+    </div>
+</div>
+{% endblock %} {% block javascript %} {% endblock %}

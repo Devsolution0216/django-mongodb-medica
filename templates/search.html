@@ -1,0 +1,240 @@
+{% extends 'layout/app.html' %} {% load static %} {% block body %}
+<div class="card card-home mx-auto mt-5">
+    <!-- Icon Cards-->
+    <div class="m-4">
+        <h1 class="col-md-12 text-center text-info">Expediente Médico</h1>
+        <h1 class="col-md-12 text-center text-info">Evaluación Médica de Admisión</h1>
+    </div>
+    <div class="card-header text-center" style="border-top: 1px solid rgba(0,0,0,.125);">
+        <label style="margin-bottom: 0px;"><h4 class="text-info">Búsqueda de Pacientes</h4></label>
+    </div>
+    <div class="card-body">
+        {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+            {{ message }}
+        </div>
+        {% endfor %}
+        <form id="form" class="form-horizontal" action="search" method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="control-label" for="id_cilab">ID CiLAB:</label>
+                    <input class="form-control" type="number" name="id_cilab" id="id_cilab" />
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="control-label" for="no-emp">No. Emp:</label>
+                    <input class="form-control" type="number" name="no_emp" id="no_emp" />
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="control-label" for="fecha">Fecha:</label>
+                    <input class="form-control" type="date" name="fecha" id="fecha" />
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="control-label" for="nombres">Nombres:</label>
+                    <input class="form-control" type="text" name="nombres" id="nombres" />
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="control-label" for="apellido-p">Apellido P:</label>
+                    <input class="form-control" type="text" name="apellido_p" id="apellido_p" />
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="control-label" for="apellido-m">Apellido M.:</label>
+                    <input class="form-control" type="text" name="apellido_m" id="apellido_m" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="control-label" for="escolaridad">Escolaridad:</label>
+                    <select class="form-control" name="escolaridad" id="escolaridad">
+                        <option value="0"></option>
+                        <option value="1">Licenciatura o Sup</option>
+                        <option value="2">Educ. media</option>
+                        <option value="3">Educ. Básica</option>
+                        <option value="4">Empírica</option>
+                    </select>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="control-label" for="genero">Género:</label>
+                    <select class="form-control" name="genero" id="genero">
+                        <option value="0"></option>
+                        <option value="1">Masc</option>
+                        <option value="2">Fem</option>
+                    </select>
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="control-label" for="edo_civil">Edo. Civil:</label>
+                    <select class="form-control" name="edo_civil" id="edo_civil">
+                        <option value="0"></option>
+                        <option value="1">Soltero</option>
+                        <option value="2">Casado</option>
+                        <option value="3">Divorciado</option>
+                        <option value="4">Viudo</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="control-label" for="fec_nac">Fec. Nac:</label>
+                    <input class="form-control" type="date" name="fec_nac" id="fec_nac" />
+                </div>
+                <div class="col-md-8 form-group">
+                    <label class="control-label" for="edad">Edad:</label>
+                    <input class="form-control" type="text" name="edad" id="edad" value="" readonly="true" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="control-label" for="c_p_nac">C.P. Nac:</label>
+                    <input class="form-control" type="number" name="c_p_nac" id="c_p_nac" />
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="control-label" for="c_p_actual">C.P. Actual:</label>
+                    <input class="form-control" type="number" name="c_p_actual" id="c_p_actual" />
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="control-label" for="c_p_trabajo">C.P. Trabajo:</label>
+                    <input class="form-control" type="number" name="c_p_trabajo" id="c_p_trabajo" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-4 form-group">
+                    <label class="control-label" for="empresa">Empresa:</label>
+                    <input class="form-control" type="text" name="empresa" id="empresa" />
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="control-label" for="depto">Depto:</label>
+                    <input class="form-control" type="text" name="depto" id="depto" />
+                </div>
+                <div class="col-md-4 form-group">
+                    <label class="control-label" for="puesto">Puesto:</label>
+                    <input class="form-control" type="text" name="puesto" id="puesto" />
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-12 text-right mb-2">
+                    <a href="/" class="btn btn-secondary">Regresar </a>
+                    <a href="/create" class="btn btn-primary">Agregar nuevo</a>
+                    <button type="submit" onclick="search();" class="btn btn-cancel">Search</button>
+                    <button type="button" onclick="formClean();" class="btn btn-danger">Borrar</button>
+                </div>
+            </div>
+        </form>
+        <table class="table table-bordered table-striped table-sm">
+            <thead class="alert-primary">
+                <tr>
+                    <th>ID CiLAB</th>
+                    <th>Nombres</th>
+                    <th>Apellido P</th>
+                    <th>Apellido M</th>
+                    <th>Edad</th>
+                    <th>Género</th>
+                    <th>Empresa</th>
+                    <th>Fecha</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody id="htmlTable">
+
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %} {% block javascript %}
+<script type="text/javascript" src="{% static 'datatables/jquery.dataTables.js' %}"></script>
+<script type="text/javascript" src="{% static 'datatables/dataTables.bootstrap4.js' %}"></script>
+
+<!-- Include jQuery -->
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.3.min.js"></script>
+
+<!-- Include Date Range Picker -->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/js/bootstrap-datepicker.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css" />
+<script>
+    $(document).ready(function() {
+        search();
+
+        var container = "body";
+        $('.datepicker').datepicker({
+            format: 'mm/dd/yyyy',
+            container: container,
+            todayHighlight: true,
+            autoclose: true,
+        })
+
+        $('#fec_nac').change(function(e) {
+            var birth = $('#fec_nac').val();
+            var startDate = new Date(birth);
+            var calDate = dateDiff(birth);
+            $('#edad').val(calDate);
+        });
+
+        $('#form').submit(function(event) {
+            search();
+            event.preventDefault();
+
+        });
+
+        $("#form").find('input').change(function() {
+            search();
+        });
+        $("#form").find('select').change(function() {
+            search();
+        });
+    });
+
+    function calculateAge(birthday) { // birthday is a date
+        var ageDifMs = Date.now() - birthday;
+        var ageDate = new Date(ageDifMs); // miliseconds from epoch
+        return Math.abs(ageDate.getUTCFullYear() - 1970);
+    }
+
+    function formClean() {
+        $("#form").find('input').val("");
+    }
+
+    function search() {
+        var data = $('#form').serialize();
+        $.ajax({
+            url: '{% url "searchAjax" %}',
+            type: 'POST',
+            dataType: 'json',
+            data: data,
+            success: function(data) {
+                $('#htmlTable').html(data.data);
+            }
+        });
+    }
+
+    function dateDiff(date) {
+        date = date.split('-');
+        var today = new Date();
+        var year = today.getFullYear();
+        var month = today.getMonth() + 1;
+        var day = today.getDate();
+        var yy = parseInt(date[0]);
+        var mm = parseInt(date[1]);
+        var dd = parseInt(date[2]);
+        var years, months, days;
+        // months
+        months = month - mm;
+        if (day < dd) {
+            months = months - 1;
+        }
+        // years
+        years = year - yy;
+
+        if (month * 100 + day < mm * 100 + dd) {
+            years = years - 1;
+            months = months + 12;
+        }
+        // days
+        days = Math.floor((today.getTime() - (new Date(yy + years, mm + months - 1, dd)).getTime()) / (24 * 60 * 60 * 1000));
+        //
+        var result = years + " years " + months + " months " + days + " days ";
+        return result;
+    }
+</script>
+{% endblock %}
